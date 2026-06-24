@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHAOS LIVE</title>
 </head>
-
 <body>
 
 <h1>CHAOS LIVE</h1>
 
-<div id="status">
-로딩중...
-</div>
+<div id="result">로딩중...</div>
 
 <script>
 
-document.getElementById('status').innerHTML =
-'GitHub Pages 연결 성공';
+fetch("https://api.wc3stats.com/gamelist")
+.then(r => r.json())
+.then(data => {
+
+    document.getElementById("result").innerHTML =
+        "성공 : " + data.body.length + "개 방 발견";
+
+})
+.catch(err => {
+
+    document.getElementById("result").innerHTML =
+        "실패 : " + err;
+
+});
 
 </script>
 
