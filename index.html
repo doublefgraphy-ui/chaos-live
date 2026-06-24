@@ -4,28 +4,114 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHAOS LIVE</title>
+
 <style>
-body{margin:0;background:#111;color:#fff;font-family:Arial,sans-serif}
-.wrap{max-width:900px;margin:0 auto;padding:24px}
-h1{margin:0 0 8px}
-.status{color:#aaa;margin-bottom:20px}
-.room{background:#1b1b1b;border:1px solid #333;border-radius:12px;padding:16px;margin-bottom:12px}
-.top{display:flex;justify-content:space-between;gap:12px;font-size:18px;font-weight:700}
-.count{color:#8cff8c}
-.map{color:#bbb;margin-top:8px;word-break:break-all}
-.info{color:#888;margin-top:8px;font-size:14px}
+body{
+  margin:0;
+  background:#0d0f14;
+  color:#fff;
+  font-family:Arial, sans-serif;
+}
+
+.wrap{
+  max-width:980px;
+  margin:0 auto;
+  padding:24px;
+}
+
+h1{
+  margin:0;
+  font-size:34px;
+}
+
+.sub{
+  color:#8b93a1;
+  margin:8px 0 24px;
+}
+
+.status{
+  background:#171b24;
+  border:1px solid #2a3040;
+  padding:14px 16px;
+  border-radius:12px;
+  margin-bottom:16px;
+}
+
+.room{
+  background:#151922;
+  border:1px solid #2a3040;
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.room-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+}
+
+.room-name{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.players{
+  font-size:20px;
+  font-weight:bold;
+  color:#8cff8c;
+  white-space:nowrap;
+}
+
+.map{
+  margin-top:8px;
+  color:#c7ccd6;
+  word-break:break-all;
+}
+
+.info{
+  margin-top:10px;
+  color:#8b93a1;
+  font-size:14px;
+}
+
+.badge{
+  display:inline-block;
+  padding:3px 8px;
+  border-radius:999px;
+  background:#232a3a;
+  color:#9db7ff;
+  font-size:12px;
+  margin-right:6px;
+}
+
+@media(max-width:600px){
+  h1{font-size:28px;}
+  .room-top{align-items:flex-start;}
+  .room-name{font-size:16px;}
+}
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
   <h1>CHAOS LIVE</h1>
+  <div class="sub">Warcraft III Reforged CHAOS Room List</div>
+
   <div id="status" class="status">로딩중...</div>
   <div id="rooms"></div>
 </div>
 
 <script>
 const API = "https://api.wc3stats.com/gamelist";
+
+function cleanMapName(map){
+  return map
+    .replace(".w3x", "")
+    .replace(".w3m", "");
+}
 
 async function loadRooms(){
   const status = document.getElementById("status");
@@ -42,7 +128,15 @@ async function loadRooms(){
       )
       .sort((a,b) => b.slotsTaken - a.slotsTaken);
 
-    status.innerHTML = `현재 CHAOS 방 ${rooms.length}개 · 30초마다 자동 갱신`;
+    const now = new Date();
+    const timeText = now.toLocaleTimeString("ko-KR", {
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit"
+    });
+
+    status.innerHTML =
+      `현재 CHAOS 방 <strong>${rooms.length}</strong>개 · 마지막 갱신 ${timeText} · 30초 자동 갱신`;
 
     if(rooms.length === 0){
       roomsEl.innerHTML = `<div class="room">현재 열린 CHAOS 방이 없습니다.</div>`;
@@ -51,20 +145,25 @@ async function loadRooms(){
 
     roomsEl.innerHTML = rooms.map(room => `
       <div class="room">
-        <div class="top">
-          <div>${room.name || "제목 없음"}</div>
-          <div class="count">${room.slotsTaken}/${room.slotsTotal}</div>
+        <div class="room-top">
+          <div class="room-name">${room.name || "제목 없음"}</div>
+          <div class="players">${room.slotsTaken}/${room.slotsTotal}</div>
         </div>
-        <div class="map">${room.map}</div>
+
+        <div class="map">
+          ${cleanMapName(room.map)}
+        </div>
+
         <div class="info">
-          Host : ${room.host || "-"} · Server : ${room.server || "-"} · Uptime : ${room.uptime ?? "-"}분
+          <span class="badge">${room.server || "-"}</span>
+          Host : ${room.host || "-"} · Uptime : ${room.uptime ?? "-"}분
         </div>
       </div>
     `).join("");
 
-  }catch(e){
+  }catch(err){
     status.innerHTML = "불러오기 실패";
-    roomsEl.innerHTML = `<div class="room">${e}</div>`;
+    roomsEl.innerHTML = `<div class="room">${err}</div>`;
   }
 }
 
