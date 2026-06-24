@@ -1,32 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHAOS LIVE</title>
+<style>
+body{margin:0;background:#111;color:#fff;font-family:Arial,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:24px}
+h1{margin:0 0 8px}
+.status{color:#aaa;margin-bottom:20px}
+.room{background:#1b1b1b;border:1px solid #333;border-radius:12px;padding:16px;margin-bottom:12px}
+.top{display:flex;justify-content:space-between;gap:12px;font-size:18px;font-weight:700}
+.count{color:#8cff8c}
+.map{color:#bbb;margin-top:8px;word-break:break-all}
+.info{color:#888;margin-top:8px;font-size:14px}
+</style>
 </head>
 <body>
 
-<h1>CHAOS LIVE</h1>
-
-<div id="result">로딩중...</div>
+<div class="wrap">
+  <h1>CHAOS LIVE</h1>
+  <div id="status" class="status">로딩중...</div>
+  <div id="rooms"></div>
+</div>
 
 <script>
+const API = "https://api.wc3stats.com/gamelist";
 
-fetch("https://api.wc3stats.com/gamelist")
-.then(r => r.json())
-.then(data => {
+async function loadRooms(){
+  const status = document.getElementById("status");
+  const roomsEl = document.getElementById("rooms");
 
-    document.getElementById("result").innerHTML =
-        "성공 : " + data.body.length + "개 방 발견";
+  try{
+    const res = await fetch(API);
+    const data = await res.json();
 
-})
-.catch(err => {
+    const rooms = data.body
+      .filter(room =>
+        room.map &&
+        room.map.toLowerCase().includes("chaos")
+      )
+      .sort((a,b) => b.slotsTaken - a.slotsTaken);
 
-    document.getElementById("result").innerHTML =
-        "실패 : " + err;
+    status.innerHTML = `현재 CHAOS 방 ${rooms.length}개 · 30초마다 자동 갱신`;
 
-});
+    if(rooms.length === 0){
+      roomsEl.innerHTML = `<div class="room">현재 열린 CHAOS 방이 없습니다.</div>`;
+      return;
+    }
 
+    roomsEl.innerHTML = rooms.map(room => `
+      <div class="room">
+        <div class="top">
+          <div>${room.name || "제목 없음"}</div>
+          <div class="count">${room.slotsTaken}/${room.slotsTotal}</div>
+        </div>
+        <div class="map">${room.map}</div>
+        <div class="info">
+          Host : ${room.host || "-"} · Server : ${room.server || "-"} · Uptime : ${room.uptime ?? "-"}분
+        </div>
+      </div>
+    `).join("");
+
+  }catch(e){
+    status.innerHTML = "불러오기 실패";
+    roomsEl.innerHTML = `<div class="room">${e}</div>`;
+  }
+}
+
+loadRooms();
+setInterval(loadRooms, 30000);
 </script>
 
 </body>
