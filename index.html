@@ -7,411 +7,71 @@
 
 <style>
 *{box-sizing:border-box}
-
 :root{
-  --bg:#0f0c09;
-  --bg2:#17120d;
-  --panel:#1d1711;
-  --panel2:#241c14;
-  --line:#3a2d20;
-  --line2:#57412b;
-  --text:#f7efe4;
-  --sub:#a79784;
-  --muted:#736657;
-  --gold:#f2c36b;
-  --gold2:#ffdf99;
-  --green:#8ce889;
-  --blue:#8bb7ff;
-  --orange:#ffad5c;
-  --red:#ff6b6b;
+  --bg:#0f0c09;--panel:#1d1711;--line:#3a2d20;
+  --text:#f7efe4;--sub:#a79784;--muted:#736657;
+  --gold:#f2c36b;--gold2:#ffdf99;
+  --green:#8ce889;--blue:#8bb7ff;--orange:#ffad5c;--red:#ff6b6b;
 }
-
 body{
-  margin:0;
-  min-height:100vh;
-  color:var(--text);
+  margin:0;min-height:100vh;color:var(--text);
   font-family:Arial,"Noto Sans KR",sans-serif;
   background:
     radial-gradient(circle at 16% 0%,rgba(242,195,107,.16),transparent 34%),
-    radial-gradient(circle at 88% 10%,rgba(255,128,60,.08),transparent 30%),
     linear-gradient(180deg,#120e0a 0%,#070605 100%);
 }
+.wrap{max-width:1120px;margin:0 auto;padding:34px 18px 70px}
+.header{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:22px}
+.logo{font-size:42px;font-weight:950;letter-spacing:-1.5px;line-height:1}
+.logo span{color:var(--gold)}
+.sub{margin-top:10px;color:var(--sub);font-size:14px}
+.live-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 18px var(--green);margin-right:9px}
+.status-line{text-align:right;color:var(--sub);font-size:14px}
 
-.wrap{
-  max-width:1120px;
-  margin:0 auto;
-  padding:34px 18px 70px;
-}
+.summary{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.summary-item{display:flex;align-items:center;gap:8px;background:rgba(29,23,17,.78);border:1px solid rgba(242,195,107,.13);border-radius:999px;padding:10px 14px;color:var(--sub);font-size:14px}
+.summary-item strong{color:var(--gold2);font-size:16px}
 
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:24px;
-  margin-bottom:22px;
-}
+.toolbar{display:flex;gap:10px;align-items:center;background:rgba(19,14,10,.74);border:1px solid rgba(242,195,107,.12);border-radius:20px;padding:12px;margin-bottom:16px}
+.search-wrap{position:relative;flex:1}
+.search-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search{width:100%;height:48px;background:#0d0a07;border:1px solid #33271b;color:var(--text);border-radius:14px;padding:0 14px 0 40px;font-size:15px;outline:none}
+.btn{height:48px;border:1px solid #4b3926;background:linear-gradient(180deg,#2a2118,#1b150f);color:#f7dfb4;border-radius:14px;padding:0 18px;font-weight:850;cursor:pointer}
 
-.logo{
-  font-size:42px;
-  font-weight:950;
-  letter-spacing:-1.5px;
-  line-height:1;
-}
-
-.logo span{
-  color:var(--gold);
-}
-
-.sub{
-  margin-top:10px;
-  color:var(--sub);
-  font-size:14px;
-}
-
-.live-dot{
-  display:inline-block;
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 18px var(--green);
-  margin-right:9px;
-}
-
-.status-line{
-  text-align:right;
-  color:var(--sub);
-  font-size:14px;
-}
-
-.summary{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-bottom:18px;
-}
-
-.summary-item{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:rgba(29,23,17,.78);
-  border:1px solid rgba(242,195,107,.13);
-  border-radius:999px;
-  padding:10px 14px;
-  color:var(--sub);
-  font-size:14px;
-}
-
-.summary-item strong{
-  color:var(--gold2);
-  font-size:16px;
-}
-
-.toolbar{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  background:rgba(19,14,10,.74);
-  border:1px solid rgba(242,195,107,.12);
-  border-radius:20px;
-  padding:12px;
-  margin-bottom:16px;
-  box-shadow:0 18px 60px rgba(0,0,0,.22);
-}
-
-.search-wrap{
-  position:relative;
-  flex:1;
-}
-
-.search-icon{
-  position:absolute;
-  left:15px;
-  top:50%;
-  transform:translateY(-50%);
-  color:var(--muted);
-}
-
-.search{
-  width:100%;
-  height:48px;
-  background:#0d0a07;
-  border:1px solid #33271b;
-  color:var(--text);
-  border-radius:14px;
-  padding:0 14px 0 40px;
-  font-size:15px;
-  outline:none;
-}
-
-.search:focus{
-  border-color:rgba(242,195,107,.65);
-  box-shadow:0 0 0 3px rgba(242,195,107,.08);
-}
-
-.btn{
-  height:48px;
-  border:1px solid #4b3926;
-  background:linear-gradient(180deg,#2a2118,#1b150f);
-  color:#f7dfb4;
-  border-radius:14px;
-  padding:0 18px;
-  font-weight:850;
-  cursor:pointer;
-}
-
-.version-tabs{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-bottom:14px;
-}
-
-.tab{
-  border:1px solid #3d2f21;
-  background:rgba(29,23,17,.62);
-  color:var(--sub);
-  border-radius:999px;
-  padding:8px 12px;
-  font-size:13px;
-}
-
-.tab strong{
-  color:var(--gold2);
-}
-
-.list-head{
-  display:grid;
-  grid-template-columns:110px 1fr 210px 140px 100px;
-  gap:14px;
-  padding:0 18px 10px;
-  color:var(--muted);
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.5px;
-  text-transform:uppercase;
-}
-
-.rooms{
-  display:grid;
-  gap:10px;
-}
-
-.room{
-  display:grid;
-  grid-template-columns:110px 1fr 210px 140px 100px;
-  align-items:center;
-  gap:14px;
-  position:relative;
-  overflow:hidden;
-  background:
-    linear-gradient(135deg,rgba(38,29,20,.96),rgba(19,14,10,.98));
-  border:1px solid rgba(242,195,107,.13);
-  border-radius:18px;
-  padding:16px 18px;
-  box-shadow:0 15px 45px rgba(0,0,0,.22);
-  transition:.18s ease;
-}
-
-.room:hover{
-  transform:translateY(-1px);
-  border-color:rgba(242,195,107,.33);
-  background:
-    linear-gradient(135deg,rgba(48,37,26,.98),rgba(20,15,10,.98));
-}
-
-.room:before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  bottom:0;
-  width:4px;
-  background:var(--green);
-}
-
+.list-head,.started-head{display:grid;grid-template-columns:110px 1fr 210px 140px 100px;gap:14px;padding:0 18px 10px;color:var(--muted);font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.rooms{display:grid;gap:10px}
+.room,.started-room{display:grid;grid-template-columns:110px 1fr 210px 140px 100px;align-items:center;gap:14px;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(38,29,20,.96),rgba(19,14,10,.98));border:1px solid rgba(242,195,107,.13);border-radius:18px;padding:16px 18px;box-shadow:0 15px 45px rgba(0,0,0,.22)}
+.room:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--green)}
 .room.mid:before{background:var(--blue)}
 .room.near:before{background:var(--orange)}
 .room.full:before{background:var(--red)}
+.version{font-size:22px;font-weight:950;color:var(--gold);letter-spacing:-.5px}
+.room-name{font-size:17px;font-weight:900;color:#fff6e9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.map{margin-top:5px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.host-label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.4px;margin-bottom:4px}
+.host{font-size:16px;font-weight:900;color:#f4eadc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.players{text-align:right}
+.count{font-size:27px;font-weight:950;line-height:1}
+.count.open{color:var(--green)}.count.mid{color:var(--blue)}.count.near{color:var(--orange)}.count.full{color:var(--red)}
+.bar{width:100%;height:7px;margin-top:8px;background:#33291f;border-radius:999px;overflow:hidden}
+.fill{height:100%;border-radius:999px;background:var(--green)}
+.fill.mid{background:var(--blue)}.fill.near{background:var(--orange)}.fill.full{background:var(--red)}
+.created{text-align:right;color:var(--sub);font-size:14px;font-weight:800}
 
-.version{
-  font-size:22px;
-  font-weight:950;
-  color:var(--gold);
-  letter-spacing:-.5px;
-}
-
-.version.dc{
-  color:#d2a2ff;
-}
-
-.room-name{
-  font-size:17px;
-  font-weight:900;
-  color:#fff6e9;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.map{
-  margin-top:5px;
-  font-size:12px;
-  color:var(--muted);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.host-label{
-  font-size:11px;
-  color:var(--muted);
-  font-weight:800;
-  letter-spacing:.4px;
-  margin-bottom:4px;
-}
-
-.host{
-  font-size:16px;
-  font-weight:900;
-  color:#f4eadc;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.players{
-  text-align:right;
-}
-
-.count{
-  font-size:27px;
-  font-weight:950;
-  line-height:1;
-}
-
-.count.open{color:var(--green)}
-.count.mid{color:var(--blue)}
-.count.near{color:var(--orange)}
-.count.full{color:var(--red)}
-
-.bar{
-  width:100%;
-  height:7px;
-  margin-top:8px;
-  background:#33291f;
-  border-radius:999px;
-  overflow:hidden;
-}
-
-.fill{
-  height:100%;
-  border-radius:999px;
-  background:var(--green);
-}
-
-.fill.mid{background:var(--blue)}
-.fill.near{background:var(--orange)}
-.fill.full{background:var(--red)}
-
-.created{
-  text-align:right;
-  color:var(--sub);
-  font-size:14px;
-  font-weight:800;
-}
-
-.empty,.error{
-  background:rgba(29,23,17,.78);
-  border:1px solid rgba(242,195,107,.14);
-  border-radius:18px;
-  padding:24px;
-  color:var(--sub);
-}
+.section-title{margin:30px 0 12px;font-size:20px;font-weight:950;color:var(--gold2)}
+.section-note{color:var(--muted);font-size:13px;margin-top:-6px;margin-bottom:12px}
+.started-room{opacity:.92;border-color:rgba(255,173,92,.18)}
+.started-room:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--orange)}
+.started-badge{color:var(--orange);font-weight:950}
+.empty,.error{background:rgba(29,23,17,.78);border:1px solid rgba(242,195,107,.14);border-radius:18px;padding:24px;color:var(--sub)}
 
 @media(max-width:900px){
-  .header{
-    display:block;
-  }
-
-  .status-line{
-    text-align:left;
-    margin-top:12px;
-  }
-
-  .list-head{
-    display:none;
-  }
-
-  .room{
-    grid-template-columns:1fr auto;
-    gap:10px 14px;
-    padding:17px;
-  }
-
-  .version{
-    grid-column:1/2;
-  }
-
-  .room-main{
-    grid-column:1/3;
-  }
-
-  .host-box{
-    grid-column:1/2;
-  }
-
-  .players{
-    grid-column:2/3;
-    grid-row:1/3;
-    min-width:90px;
-  }
-
-  .created{
-    grid-column:1/3;
-    text-align:left;
-  }
-
-  .toolbar{
-    display:block;
-  }
-
-  .btn{
-    width:100%;
-    margin-top:10px;
-  }
-
-  .logo{
-    font-size:34px;
-  }
-}
-
-@media(max-width:520px){
-  .wrap{
-    padding:26px 14px 50px;
-  }
-
-  .summary{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-  }
-
-  .summary-item{
-    justify-content:space-between;
-  }
-
-  .room-name{
-    font-size:16px;
-  }
-
-  .host{
-    font-size:15px;
-  }
-
-  .count{
-    font-size:24px;
-  }
+  .header{display:block}.status-line{text-align:left;margin-top:12px}
+  .list-head,.started-head{display:none}
+  .room,.started-room{grid-template-columns:1fr auto;gap:10px 14px;padding:17px}
+  .version{grid-column:1/2}.room-main{grid-column:1/3}.host-box{grid-column:1/2}
+  .players{grid-column:2/3;grid-row:1/3;min-width:90px}.created{grid-column:1/3;text-align:left}
+  .toolbar{display:block}.btn{width:100%;margin-top:10px}.logo{font-size:34px}
 }
 </style>
 </head>
@@ -419,53 +79,55 @@ body{
 <body>
 <div class="wrap">
 
-  <header class="header">
-    <div>
-      <div class="logo"><span class="live-dot"></span>CHAOS <span>LIVE</span></div>
-      <div class="sub">Warcraft III Reforged · WCC CHAOS_B1_A1 Room List</div>
-    </div>
-    <div id="updated" class="status-line">불러오는 중...</div>
-  </header>
-
-  <section class="summary">
-    <div class="summary-item">현재 방 <strong id="totalRooms">-</strong></div>
-    <div class="summary-item">전체 인원 <strong id="totalPlayers">-</strong></div>
-    <div class="summary-item">FX <strong id="fxRooms">-</strong></div>
-    <div class="summary-item">DC <strong id="dcRooms">-</strong></div>
-  </section>
-
-  <section class="toolbar">
-    <div class="search-wrap">
-      <span class="search-icon">⌕</span>
-      <input id="search" class="search" placeholder="방제 / 방장 / 맵 버전 검색">
-    </div>
-    <button id="sortBtn" class="btn">인원 많은 순</button>
-  </section>
-
-  <div id="tabs" class="version-tabs"></div>
-
-  <div class="list-head">
-    <div>Version</div>
-    <div>Room</div>
-    <div>Host</div>
-    <div style="text-align:right">Players</div>
-    <div style="text-align:right">Created</div>
+<header class="header">
+  <div>
+    <div class="logo"><span class="live-dot"></span>CHAOS <span>LIVE</span></div>
+    <div class="sub">Warcraft III Reforged · WCC CHAOS_B1_A1 Room List</div>
   </div>
+  <div id="updated" class="status-line">불러오는 중...</div>
+</header>
 
-  <main id="rooms" class="rooms"></main>
+<section class="summary">
+  <div class="summary-item">현재 방 <strong id="totalRooms">-</strong></div>
+  <div class="summary-item">전체 인원 <strong id="totalPlayers">-</strong></div>
+  <div class="summary-item">최근 시작 추정 <strong id="startedCount">-</strong></div>
+</section>
+
+<section class="toolbar">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input id="search" class="search" placeholder="방제 / 방장 / 맵 버전 검색">
+  </div>
+  <button id="sortBtn" class="btn">인원 많은 순</button>
+</section>
+
+<div class="list-head">
+  <div>Version</div><div>Room</div><div>Host</div><div style="text-align:right">Players</div><div style="text-align:right">Created</div>
+</div>
+
+<main id="rooms" class="rooms"></main>
+
+<div class="section-title">최근 시작 추정</div>
+<div class="section-note">10/12 이상이던 방이 목록에서 사라지면 시작한 것으로 추정합니다.</div>
+
+<div class="started-head">
+  <div>Status</div><div>Room</div><div>Host</div><div style="text-align:right">Players</div><div style="text-align:right">Time</div>
+</div>
+
+<section id="startedRooms" class="rooms"></section>
 
 </div>
 
 <script>
 const API = "https://api.wc3stats.com/gamelist";
+const STORAGE_KEY = "chaos_recent_started_v04";
+const PREV_KEY = "chaos_prev_rooms_v04";
 
 let allRooms = [];
 let sortMode = "players";
 
 function cleanMapName(map){
-  return (map || "")
-    .replace(/\.w3x$/i,"")
-    .replace(/\.w3m$/i,"");
+  return (map || "").replace(/\.w3x$/i,"").replace(/\.w3m$/i,"");
 }
 
 function getVersion(map){
@@ -476,28 +138,22 @@ function getVersion(map){
     const m = name.match(/fx\s*([0-9.]+)/i);
     return m ? `FX ${m[1]}` : "FX";
   }
-
-  if(upper.includes("DC")){
-    return "DC";
-  }
+  if(upper.includes("DC")) return "DC";
 
   const wcc = name.match(/WCC[_\s-]*([A-Za-z0-9.]+)/i);
-  if(wcc){
-    return `WCC ${wcc[1]}`;
-  }
+  if(wcc) return `WCC ${wcc[1]}`;
 
   return "CHAOS";
 }
 
-function versionClass(version){
-  return version.includes("DC") ? "dc" : "";
+function roomKey(room){
+  return `${room.host || ""}_${room.map || ""}_${room.name || ""}`;
 }
 
 function roomState(room){
   const taken = Number(room.slotsTaken || 0);
   const total = Number(room.slotsTotal || 12);
   const left = total - taken;
-
   if(taken >= total) return "full";
   if(left <= 2) return "near";
   if(taken >= Math.ceil(total * .45)) return "mid";
@@ -506,34 +162,97 @@ function roomState(room){
 
 function timeAgo(ts){
   if(!ts) return "-";
-
   const created = Number(ts) * 1000;
   const diff = Math.max(0, Date.now() - created);
   const sec = Math.floor(diff / 1000);
   const min = Math.floor(sec / 60);
   const hour = Math.floor(min / 60);
-
   if(sec < 10) return "방금";
   if(sec < 60) return `${sec}초 전`;
   if(min < 60) return `${min}분 전`;
   return `${hour}시간 전`;
 }
 
-function renderTabs(rooms){
-  const counts = {};
+function getStarted(){
+  return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+}
 
-  rooms.forEach(room => {
-    const version = getVersion(room.map);
-    counts[version] = (counts[version] || 0) + 1;
+function saveStarted(list){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 20)));
+}
+
+function detectStarted(currentRooms){
+  const prev = JSON.parse(localStorage.getItem(PREV_KEY) || "[]");
+  const currentKeys = new Set(currentRooms.map(roomKey));
+  let started = getStarted();
+
+  prev.forEach(room => {
+    const key = roomKey(room);
+    const taken = Number(room.slotsTaken || 0);
+    const total = Number(room.slotsTotal || 12);
+
+    const disappeared = !currentKeys.has(key);
+    const likelyStarted = disappeared && taken >= 10;
+
+    const alreadyExists = started.some(item =>
+      item.key === key && Date.now() - item.detectedAt < 1000 * 60 * 60
+    );
+
+    if(likelyStarted && !alreadyExists){
+      started.unshift({
+        key,
+        name: room.name || "제목 없음",
+        host: room.host || "-",
+        map: room.map || "-",
+        slotsTaken: taken,
+        slotsTotal: total,
+        detectedAt: Date.now()
+      });
+    }
   });
 
-  document.getElementById("tabs").innerHTML =
-    Object.entries(counts)
-      .sort((a,b) => b[1] - a[1])
-      .map(([version,count]) => `
-        <div class="tab">${version} <strong>${count}</strong></div>
-      `)
-      .join("");
+  saveStarted(started);
+
+  localStorage.setItem(PREV_KEY, JSON.stringify(currentRooms));
+}
+
+function renderStarted(){
+  const started = getStarted().slice(0, 5);
+  document.getElementById("startedCount").textContent = started.length;
+
+  if(!started.length){
+    document.getElementById("startedRooms").innerHTML =
+      `<div class="empty">아직 최근 시작 추정 기록이 없습니다.</div>`;
+    return;
+  }
+
+  document.getElementById("startedRooms").innerHTML = started.map(room => {
+    const sec = Math.floor((Date.now() - room.detectedAt) / 1000);
+    const min = Math.floor(sec / 60);
+    const ago = sec < 60 ? `${sec}초 전` : `${min}분 전`;
+
+    return `
+      <article class="started-room">
+        <div class="started-badge">START?</div>
+
+        <div class="room-main">
+          <div class="room-name">${getVersion(room.map)} · ${room.name}</div>
+          <div class="map">${cleanMapName(room.map)}</div>
+        </div>
+
+        <div class="host-box">
+          <div class="host-label">HOST</div>
+          <div class="host">${room.host}</div>
+        </div>
+
+        <div class="players">
+          <div class="count near">${room.slotsTaken}/${room.slotsTotal}</div>
+        </div>
+
+        <div class="created">${ago}</div>
+      </article>
+    `;
+  }).join("");
 }
 
 function render(){
@@ -544,28 +263,23 @@ function render(){
     return text.includes(query);
   });
 
-  if(sortMode === "players"){
-    rooms.sort((a,b) => b.slotsTaken - a.slotsTaken);
-  }else{
-    rooms.sort((a,b) => b.created - a.created);
-  }
-
-  renderTabs(allRooms);
+  if(sortMode === "players") rooms.sort((a,b) => b.slotsTaken - a.slotsTaken);
+  else rooms.sort((a,b) => b.created - a.created);
 
   if(!rooms.length){
     document.getElementById("rooms").innerHTML =
       `<div class="empty">현재 표시할 CHAOS_B1_A1 방이 없습니다.</div>`;
+    renderStarted();
     return;
   }
 
   document.getElementById("rooms").innerHTML = rooms.map(room => {
     const state = roomState(room);
-    const version = getVersion(room.map);
     const percent = Math.min(100, Math.round((room.slotsTaken / room.slotsTotal) * 100));
 
     return `
       <article class="room ${state}">
-        <div class="version ${versionClass(version)}">${version}</div>
+        <div class="version">${getVersion(room.map)}</div>
 
         <div class="room-main">
           <div class="room-name">${room.name || "제목 없음"}</div>
@@ -588,6 +302,8 @@ function render(){
       </article>
     `;
   }).join("");
+
+  renderStarted();
 }
 
 async function loadRooms(){
@@ -595,23 +311,19 @@ async function loadRooms(){
     const res = await fetch(API);
     const data = await res.json();
 
-    allRooms = data.body
-      .filter(room =>
-        room.map &&
-        room.map.toUpperCase().startsWith("CHAOS_B1_A1_")
-      );
+    allRooms = data.body.filter(room =>
+      room.map &&
+      room.map.toUpperCase().startsWith("CHAOS_B1_A1_")
+    );
 
-    const fx = allRooms.filter(room => getVersion(room.map).includes("FX")).length;
-    const dc = allRooms.filter(room => getVersion(room.map).includes("DC")).length;
+    detectStarted(allRooms);
+
     const totalPlayers = allRooms.reduce((sum,room) =>
       sum + Number(room.slotsTaken || 0), 0
     );
 
     document.getElementById("totalRooms").textContent = allRooms.length;
     document.getElementById("totalPlayers").textContent = totalPlayers;
-    document.getElementById("fxRooms").textContent = fx;
-    document.getElementById("dcRooms").textContent = dc;
-
     document.getElementById("updated").textContent =
       new Date().toLocaleTimeString("ko-KR") + " 갱신 · 30초 자동";
 
@@ -634,6 +346,7 @@ document.getElementById("sortBtn").addEventListener("click", () => {
 
 loadRooms();
 setInterval(loadRooms, 30000);
+setInterval(renderStarted, 1000);
 </script>
 
 </body>
