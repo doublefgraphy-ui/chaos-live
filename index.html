@@ -7,201 +7,411 @@
 
 <style>
 *{box-sizing:border-box}
+
 :root{
-  --bg:#07090f;
-  --panel:#111724;
-  --panel2:#151c2c;
-  --line:#283552;
-  --text:#f4f7ff;
-  --sub:#8f9bb3;
-  --blue:#6aa8ff;
-  --green:#66ff9a;
-  --yellow:#ffd86a;
-  --orange:#ff9f43;
-  --red:#ff5d6c;
-  --purple:#b784ff;
+  --bg:#0f0c09;
+  --bg2:#17120d;
+  --panel:#1d1711;
+  --panel2:#241c14;
+  --line:#3a2d20;
+  --line2:#57412b;
+  --text:#f7efe4;
+  --sub:#a79784;
+  --muted:#736657;
+  --gold:#f2c36b;
+  --gold2:#ffdf99;
+  --green:#8ce889;
+  --blue:#8bb7ff;
+  --orange:#ffad5c;
+  --red:#ff6b6b;
 }
+
 body{
   margin:0;
   min-height:100vh;
-  background:
-    radial-gradient(circle at 15% 0%,rgba(58,94,180,.35),transparent 34%),
-    radial-gradient(circle at 90% 10%,rgba(122,70,255,.18),transparent 30%),
-    linear-gradient(180deg,#080b12,#05060a);
   color:var(--text);
   font-family:Arial,"Noto Sans KR",sans-serif;
+  background:
+    radial-gradient(circle at 16% 0%,rgba(242,195,107,.16),transparent 34%),
+    radial-gradient(circle at 88% 10%,rgba(255,128,60,.08),transparent 30%),
+    linear-gradient(180deg,#120e0a 0%,#070605 100%);
 }
-.wrap{max-width:1180px;margin:0 auto;padding:32px 18px 70px}
-.header{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:22px}
-.logo{font-size:44px;font-weight:950;letter-spacing:-1.5px}
-.logo span{color:var(--blue)}
-.sub{color:var(--sub);margin-top:8px}
-.live-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 18px var(--green);margin-right:9px}
-.updated{color:var(--sub);font-size:14px;text-align:right}
 
-.hero{
-  display:grid;
-  grid-template-columns:1.4fr .9fr;
-  gap:16px;
-  margin-bottom:16px;
+.wrap{
+  max-width:1120px;
+  margin:0 auto;
+  padding:34px 18px 70px;
 }
-.hot{
-  position:relative;
-  overflow:hidden;
-  background:linear-gradient(135deg,rgba(32,45,75,.95),rgba(13,17,27,.96));
-  border:1px solid rgba(106,168,255,.34);
-  border-radius:26px;
-  padding:24px;
-  box-shadow:0 24px 70px rgba(0,0,0,.35);
-}
-.hot:before{
-  content:"";
-  position:absolute;
-  inset:-60px -80px auto auto;
-  width:260px;height:260px;border-radius:50%;
-  background:rgba(106,168,255,.16);
-  filter:blur(4px);
-}
-.hot-label{color:var(--yellow);font-weight:900;font-size:14px;margin-bottom:12px}
-.hot-version{font-size:42px;font-weight:950;color:var(--blue);letter-spacing:-1px}
-.hot-name{font-size:21px;font-weight:800;margin-top:10px}
-.hot-host{font-size:18px;margin-top:16px;color:#fff}
-.hot-bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:22px}
-.hot-count{font-size:44px;font-weight:950;color:var(--green);white-space:nowrap}
-.hot-time{color:var(--sub);font-size:14px}
 
-.stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  margin-bottom:22px;
 }
-.stat{
-  background:rgba(17,23,36,.82);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:22px;
-  padding:18px;
+
+.logo{
+  font-size:42px;
+  font-weight:950;
+  letter-spacing:-1.5px;
+  line-height:1;
 }
-.stat-label{color:var(--sub);font-size:13px}
-.stat-value{font-size:32px;font-weight:950;margin-top:8px}
+
+.logo span{
+  color:var(--gold);
+}
+
+.sub{
+  margin-top:10px;
+  color:var(--sub);
+  font-size:14px;
+}
+
+.live-dot{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 18px var(--green);
+  margin-right:9px;
+}
+
+.status-line{
+  text-align:right;
+  color:var(--sub);
+  font-size:14px;
+}
+
+.summary{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.summary-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(29,23,17,.78);
+  border:1px solid rgba(242,195,107,.13);
+  border-radius:999px;
+  padding:10px 14px;
+  color:var(--sub);
+  font-size:14px;
+}
+
+.summary-item strong{
+  color:var(--gold2);
+  font-size:16px;
+}
 
 .toolbar{
   display:flex;
   gap:10px;
-  background:rgba(10,13,20,.72);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:22px;
+  align-items:center;
+  background:rgba(19,14,10,.74);
+  border:1px solid rgba(242,195,107,.12);
+  border-radius:20px;
   padding:12px;
-  margin:18px 0;
+  margin-bottom:16px;
+  box-shadow:0 18px 60px rgba(0,0,0,.22);
 }
-.search{
+
+.search-wrap{
+  position:relative;
   flex:1;
-  background:#070a11;
-  border:1px solid #27324a;
-  color:#fff;
-  border-radius:15px;
-  padding:15px;
+}
+
+.search-icon{
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+}
+
+.search{
+  width:100%;
+  height:48px;
+  background:#0d0a07;
+  border:1px solid #33271b;
+  color:var(--text);
+  border-radius:14px;
+  padding:0 14px 0 40px;
   font-size:15px;
   outline:none;
 }
+
+.search:focus{
+  border-color:rgba(242,195,107,.65);
+  box-shadow:0 0 0 3px rgba(242,195,107,.08);
+}
+
 .btn{
-  border:1px solid #344463;
-  background:#141d2f;
-  color:#dce7ff;
-  border-radius:15px;
+  height:48px;
+  border:1px solid #4b3926;
+  background:linear-gradient(180deg,#2a2118,#1b150f);
+  color:#f7dfb4;
+  border-radius:14px;
   padding:0 18px;
-  font-weight:800;
+  font-weight:850;
   cursor:pointer;
 }
 
-.version-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.version-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:14px;
+}
+
 .tab{
-  border:1px solid #2c3a58;
-  background:#101725;
-  color:#b7c6e8;
+  border:1px solid #3d2f21;
+  background:rgba(29,23,17,.62);
+  color:var(--sub);
   border-radius:999px;
-  padding:9px 13px;
+  padding:8px 12px;
   font-size:13px;
 }
-.tab strong{color:#fff}
 
-.rooms{display:grid;gap:12px}
+.tab strong{
+  color:var(--gold2);
+}
+
+.list-head{
+  display:grid;
+  grid-template-columns:110px 1fr 210px 140px 100px;
+  gap:14px;
+  padding:0 18px 10px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+}
+
+.rooms{
+  display:grid;
+  gap:10px;
+}
+
 .room{
+  display:grid;
+  grid-template-columns:110px 1fr 210px 140px 100px;
+  align-items:center;
+  gap:14px;
   position:relative;
   overflow:hidden;
-  background:linear-gradient(135deg,rgba(22,29,45,.98),rgba(11,15,24,.98));
-  border:1px solid rgba(106,168,255,.18);
-  border-radius:24px;
-  padding:20px;
-  box-shadow:0 16px 48px rgba(0,0,0,.25);
+  background:
+    linear-gradient(135deg,rgba(38,29,20,.96),rgba(19,14,10,.98));
+  border:1px solid rgba(242,195,107,.13);
+  border-radius:18px;
+  padding:16px 18px;
+  box-shadow:0 15px 45px rgba(0,0,0,.22);
+  transition:.18s ease;
 }
+
+.room:hover{
+  transform:translateY(-1px);
+  border-color:rgba(242,195,107,.33);
+  background:
+    linear-gradient(135deg,rgba(48,37,26,.98),rgba(20,15,10,.98));
+}
+
 .room:before{
   content:"";
   position:absolute;
-  left:0;top:0;bottom:0;
-  width:5px;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
   background:var(--green);
 }
+
 .room.mid:before{background:var(--blue)}
 .room.near:before{background:var(--orange)}
 .room.full:before{background:var(--red)}
 
-.room-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
 .version{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-size:30px;
+  font-size:22px;
   font-weight:950;
-  color:var(--blue);
+  color:var(--gold);
   letter-spacing:-.5px;
 }
-.version.dc{color:var(--purple)}
-.room-name{font-size:19px;font-weight:850;margin-top:10px;color:#f6f8ff}
-.host{font-size:22px;font-weight:950;margin-top:16px}
-.created{color:var(--sub);font-size:14px;margin-top:10px}
-.players{text-align:right}
-.count{font-size:40px;font-weight:950;white-space:nowrap}
+
+.version.dc{
+  color:#d2a2ff;
+}
+
+.room-name{
+  font-size:17px;
+  font-weight:900;
+  color:#fff6e9;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.map{
+  margin-top:5px;
+  font-size:12px;
+  color:var(--muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.host-label{
+  font-size:11px;
+  color:var(--muted);
+  font-weight:800;
+  letter-spacing:.4px;
+  margin-bottom:4px;
+}
+
+.host{
+  font-size:16px;
+  font-weight:900;
+  color:#f4eadc;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.players{
+  text-align:right;
+}
+
+.count{
+  font-size:27px;
+  font-weight:950;
+  line-height:1;
+}
+
 .count.open{color:var(--green)}
 .count.mid{color:var(--blue)}
 .count.near{color:var(--orange)}
 .count.full{color:var(--red)}
+
 .bar{
-  width:170px;
-  height:9px;
-  background:#20283a;
+  width:100%;
+  height:7px;
+  margin-top:8px;
+  background:#33291f;
   border-radius:999px;
-  margin-top:12px;
   overflow:hidden;
 }
+
 .fill{
   height:100%;
   border-radius:999px;
   background:var(--green);
 }
+
 .fill.mid{background:var(--blue)}
 .fill.near{background:var(--orange)}
 .fill.full{background:var(--red)}
-.map{font-size:13px;color:#66728d;margin-top:14px;word-break:break-all}
-.empty,.error{
-  background:#111724;
-  border:1px solid #283552;
-  border-radius:20px;
-  padding:24px;
-  color:#b8c3da;
+
+.created{
+  text-align:right;
+  color:var(--sub);
+  font-size:14px;
+  font-weight:800;
 }
 
-@media(max-width:820px){
-  .header{display:block}
-  .updated{text-align:left;margin-top:12px}
-  .hero{grid-template-columns:1fr}
-  .logo{font-size:36px}
-  .hot-version{font-size:34px}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .toolbar{display:block}
-  .btn{width:100%;height:48px;margin-top:10px}
-  .room-head{display:block}
-  .players{text-align:left;margin-top:16px}
-  .bar{width:100%}
+.empty,.error{
+  background:rgba(29,23,17,.78);
+  border:1px solid rgba(242,195,107,.14);
+  border-radius:18px;
+  padding:24px;
+  color:var(--sub);
+}
+
+@media(max-width:900px){
+  .header{
+    display:block;
+  }
+
+  .status-line{
+    text-align:left;
+    margin-top:12px;
+  }
+
+  .list-head{
+    display:none;
+  }
+
+  .room{
+    grid-template-columns:1fr auto;
+    gap:10px 14px;
+    padding:17px;
+  }
+
+  .version{
+    grid-column:1/2;
+  }
+
+  .room-main{
+    grid-column:1/3;
+  }
+
+  .host-box{
+    grid-column:1/2;
+  }
+
+  .players{
+    grid-column:2/3;
+    grid-row:1/3;
+    min-width:90px;
+  }
+
+  .created{
+    grid-column:1/3;
+    text-align:left;
+  }
+
+  .toolbar{
+    display:block;
+  }
+
+  .btn{
+    width:100%;
+    margin-top:10px;
+  }
+
+  .logo{
+    font-size:34px;
+  }
+}
+
+@media(max-width:520px){
+  .wrap{
+    padding:26px 14px 50px;
+  }
+
+  .summary{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .summary-item{
+    justify-content:space-between;
+  }
+
+  .room-name{
+    font-size:16px;
+  }
+
+  .host{
+    font-size:15px;
+  }
+
+  .count{
+    font-size:24px;
+  }
 }
 </style>
 </head>
@@ -209,54 +419,53 @@ body{
 <body>
 <div class="wrap">
 
-  <div class="header">
+  <header class="header">
     <div>
       <div class="logo"><span class="live-dot"></span>CHAOS <span>LIVE</span></div>
-      <div class="sub">Warcraft III Reforged · WCC CHAOS_B1_A1 Room Tracker</div>
+      <div class="sub">Warcraft III Reforged · WCC CHAOS_B1_A1 Room List</div>
     </div>
-    <div id="updated" class="updated">불러오는 중...</div>
-  </div>
+    <div id="updated" class="status-line">불러오는 중...</div>
+  </header>
 
-  <div class="hero">
-    <section id="hotRoom" class="hot"></section>
+  <section class="summary">
+    <div class="summary-item">현재 방 <strong id="totalRooms">-</strong></div>
+    <div class="summary-item">전체 인원 <strong id="totalPlayers">-</strong></div>
+    <div class="summary-item">FX <strong id="fxRooms">-</strong></div>
+    <div class="summary-item">DC <strong id="dcRooms">-</strong></div>
+  </section>
 
-    <section class="stats">
-      <div class="stat">
-        <div class="stat-label">현재 방</div>
-        <div id="totalRooms" class="stat-value">-</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">전체 인원</div>
-        <div id="totalPlayers" class="stat-value">-</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">FX 방</div>
-        <div id="fxRooms" class="stat-value">-</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">DC 방</div>
-        <div id="dcRooms" class="stat-value">-</div>
-      </div>
-    </section>
-  </div>
-
-  <div class="toolbar">
-    <input id="search" class="search" placeholder="방제 / 방장 / 맵 버전 검색">
+  <section class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input id="search" class="search" placeholder="방제 / 방장 / 맵 버전 검색">
+    </div>
     <button id="sortBtn" class="btn">인원 많은 순</button>
-  </div>
+  </section>
 
   <div id="tabs" class="version-tabs"></div>
-  <div id="rooms" class="rooms"></div>
+
+  <div class="list-head">
+    <div>Version</div>
+    <div>Room</div>
+    <div>Host</div>
+    <div style="text-align:right">Players</div>
+    <div style="text-align:right">Created</div>
+  </div>
+
+  <main id="rooms" class="rooms"></main>
 
 </div>
 
 <script>
 const API = "https://api.wc3stats.com/gamelist";
+
 let allRooms = [];
 let sortMode = "players";
 
 function cleanMapName(map){
-  return (map || "").replace(/\.w3x$/i,"").replace(/\.w3m$/i,"");
+  return (map || "")
+    .replace(/\.w3x$/i,"")
+    .replace(/\.w3m$/i,"");
 }
 
 function getVersion(map){
@@ -268,10 +477,14 @@ function getVersion(map){
     return m ? `FX ${m[1]}` : "FX";
   }
 
-  if(upper.includes("DC")) return "DC";
+  if(upper.includes("DC")){
+    return "DC";
+  }
 
   const wcc = name.match(/WCC[_\s-]*([A-Za-z0-9.]+)/i);
-  if(wcc) return `WCC ${wcc[1]}`;
+  if(wcc){
+    return `WCC ${wcc[1]}`;
+  }
 
   return "CHAOS";
 }
@@ -280,7 +493,7 @@ function versionClass(version){
   return version.includes("DC") ? "dc" : "";
 }
 
-function state(room){
+function roomState(room){
   const taken = Number(room.slotsTaken || 0);
   const total = Number(room.slotsTotal || 12);
   const left = total - taken;
@@ -292,7 +505,7 @@ function state(room){
 }
 
 function timeAgo(ts){
-  if(!ts) return "생성시간 알 수 없음";
+  if(!ts) return "-";
 
   const created = Number(ts) * 1000;
   const diff = Math.max(0, Date.now() - created);
@@ -300,62 +513,35 @@ function timeAgo(ts){
   const min = Math.floor(sec / 60);
   const hour = Math.floor(min / 60);
 
-  if(sec < 10) return "방금 생성";
-  if(sec < 60) return `${sec}초 전 생성`;
-  if(min < 60) return `${min}분 전 생성`;
-  return `${hour}시간 전 생성`;
-}
-
-function renderHotRoom(rooms){
-  const hot = rooms[0];
-  const el = document.getElementById("hotRoom");
-
-  if(!hot){
-    el.innerHTML = `
-      <div class="hot-label">🔥 HOT ROOM</div>
-      <div class="hot-version">대기중</div>
-      <div class="hot-name">현재 표시할 방이 없습니다.</div>
-    `;
-    return;
-  }
-
-  const version = getVersion(hot.map);
-
-  el.innerHTML = `
-    <div class="hot-label">🔥 HOT ROOM</div>
-    <div class="hot-version">${version}</div>
-    <div class="hot-name">${hot.name || "제목 없음"}</div>
-    <div class="hot-host">👤 ${hot.host || "-"}</div>
-    <div class="hot-bottom">
-      <div>
-        <div class="hot-time">${timeAgo(hot.created)}</div>
-        <div class="map">${cleanMapName(hot.map)}</div>
-      </div>
-      <div class="hot-count">${hot.slotsTaken}/${hot.slotsTotal}</div>
-    </div>
-  `;
+  if(sec < 10) return "방금";
+  if(sec < 60) return `${sec}초 전`;
+  if(min < 60) return `${min}분 전`;
+  return `${hour}시간 전`;
 }
 
 function renderTabs(rooms){
   const counts = {};
-  rooms.forEach(r => {
-    const v = getVersion(r.map);
-    counts[v] = (counts[v] || 0) + 1;
+
+  rooms.forEach(room => {
+    const version = getVersion(room.map);
+    counts[version] = (counts[version] || 0) + 1;
   });
 
   document.getElementById("tabs").innerHTML =
     Object.entries(counts)
       .sort((a,b) => b[1] - a[1])
-      .map(([v,c]) => `<div class="tab">${v} <strong>${c}</strong></div>`)
+      .map(([version,count]) => `
+        <div class="tab">${version} <strong>${count}</strong></div>
+      `)
       .join("");
 }
 
 function render(){
-  const q = document.getElementById("search").value.toLowerCase();
+  const query = document.getElementById("search").value.toLowerCase();
 
   let rooms = allRooms.filter(room => {
     const text = `${room.name} ${room.host} ${room.map} ${getVersion(room.map)}`.toLowerCase();
-    return text.includes(q);
+    return text.includes(query);
   });
 
   if(sortMode === "players"){
@@ -364,7 +550,6 @@ function render(){
     rooms.sort((a,b) => b.created - a.created);
   }
 
-  renderHotRoom(rooms);
   renderTabs(allRooms);
 
   if(!rooms.length){
@@ -374,28 +559,32 @@ function render(){
   }
 
   document.getElementById("rooms").innerHTML = rooms.map(room => {
-    const s = state(room);
+    const state = roomState(room);
     const version = getVersion(room.map);
     const percent = Math.min(100, Math.round((room.slotsTaken / room.slotsTotal) * 100));
 
     return `
-      <article class="room ${s}">
-        <div class="room-head">
-          <div>
-            <div class="version ${versionClass(version)}">${version}</div>
-            <div class="room-name">${room.name || "제목 없음"}</div>
-            <div class="host">👤 ${room.host || "-"}</div>
-            <div class="created">🕒 ${timeAgo(room.created)}</div>
-            <div class="map">${cleanMapName(room.map)}</div>
-          </div>
+      <article class="room ${state}">
+        <div class="version ${versionClass(version)}">${version}</div>
 
-          <div class="players">
-            <div class="count ${s}">${room.slotsTaken}/${room.slotsTotal}</div>
-            <div class="bar">
-              <div class="fill ${s}" style="width:${percent}%"></div>
-            </div>
+        <div class="room-main">
+          <div class="room-name">${room.name || "제목 없음"}</div>
+          <div class="map">${cleanMapName(room.map)}</div>
+        </div>
+
+        <div class="host-box">
+          <div class="host-label">HOST</div>
+          <div class="host">${room.host || "-"}</div>
+        </div>
+
+        <div class="players">
+          <div class="count ${state}">${room.slotsTaken}/${room.slotsTotal}</div>
+          <div class="bar">
+            <div class="fill ${state}" style="width:${percent}%"></div>
           </div>
         </div>
+
+        <div class="created">${timeAgo(room.created)}</div>
       </article>
     `;
   }).join("");
@@ -410,12 +599,13 @@ async function loadRooms(){
       .filter(room =>
         room.map &&
         room.map.toUpperCase().startsWith("CHAOS_B1_A1_")
-      )
-      .sort((a,b) => b.slotsTaken - a.slotsTaken);
+      );
 
-    const fx = allRooms.filter(r => getVersion(r.map).includes("FX")).length;
-    const dc = allRooms.filter(r => getVersion(r.map).includes("DC")).length;
-    const totalPlayers = allRooms.reduce((sum,r) => sum + Number(r.slotsTaken || 0), 0);
+    const fx = allRooms.filter(room => getVersion(room.map).includes("FX")).length;
+    const dc = allRooms.filter(room => getVersion(room.map).includes("DC")).length;
+    const totalPlayers = allRooms.reduce((sum,room) =>
+      sum + Number(room.slotsTaken || 0), 0
+    );
 
     document.getElementById("totalRooms").textContent = allRooms.length;
     document.getElementById("totalPlayers").textContent = totalPlayers;
