@@ -6,166 +6,281 @@
 <title>CHAOS LIVE</title>
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
-  background:#0d0f14;
-  color:#fff;
-  font-family:Arial, sans-serif;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left,#25324d 0,#10131b 34%,#07080c 100%);
+  color:#f4f7ff;
+  font-family:Arial,'Noto Sans KR',sans-serif;
 }
 
-.wrap{
-  max-width:980px;
-  margin:0 auto;
-  padding:24px;
+.wrap{max-width:1120px;margin:0 auto;padding:28px 18px 50px}
+
+.header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:20px;margin-bottom:24px
+}
+h1{margin:0;font-size:42px;letter-spacing:-1px}
+.sub{color:#9aa6bd;margin-top:8px}
+.pulse{
+  display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:#48ff7b;box-shadow:0 0 16px #48ff7b;margin-right:8px
+}
+.updated{color:#9aa6bd;font-size:14px;text-align:right}
+
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px
+}
+.stat{
+  background:rgba(18,22,34,.82);
+  border:1px solid rgba(120,150,255,.18);
+  border-radius:18px;padding:18px;
+  box-shadow:0 12px 40px rgba(0,0,0,.25)
+}
+.stat-label{color:#8f9bb3;font-size:13px}
+.stat-value{font-size:30px;font-weight:800;margin-top:6px}
+
+.toolbar{
+  display:flex;justify-content:space-between;gap:12px;align-items:center;
+  background:rgba(10,12,18,.72);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:12px;margin-bottom:16px
+}
+.search{
+  width:100%;background:#0b0e15;border:1px solid #2b3244;
+  color:#fff;border-radius:12px;padding:13px 14px;font-size:15px
+}
+.toggle{
+  white-space:nowrap;border:1px solid #33405a;background:#151b29;
+  color:#dce6ff;border-radius:12px;padding:13px 16px;cursor:pointer
 }
 
-h1{
-  margin:0;
-  font-size:34px;
-}
-
-.sub{
-  color:#8b93a1;
-  margin:8px 0 24px;
-}
-
-.status{
-  background:#171b24;
-  border:1px solid #2a3040;
-  padding:14px 16px;
-  border-radius:12px;
-  margin-bottom:16px;
-}
-
+.rooms{display:grid;gap:12px}
 .room{
-  background:#151922;
-  border:1px solid #2a3040;
-  border-radius:14px;
-  padding:16px;
-  margin-bottom:12px;
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(26,31,45,.96),rgba(14,17,25,.96));
+  border:1px solid rgba(125,154,255,.16);
+  border-radius:20px;padding:18px;
+  box-shadow:0 16px 42px rgba(0,0,0,.28);
 }
+.room::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+  background:#48ff7b
+}
+.room.near::before{background:#ffcc4d}
+.room.full::before{background:#ff5c5c}
 
 .room-top{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:center;
+  display:flex;justify-content:space-between;gap:18px;align-items:flex-start
 }
-
+.version{
+  font-size:28px;font-weight:900;letter-spacing:-.5px;color:#78b7ff
+}
 .room-name{
-  font-size:18px;
-  font-weight:bold;
+  color:#dbe5ff;font-size:15px;margin-top:6px
 }
-
 .players{
-  font-size:20px;
-  font-weight:bold;
-  color:#8cff8c;
-  white-space:nowrap;
+  font-size:32px;font-weight:900;white-space:nowrap
 }
+.players.near{color:#ffcc4d}
+.players.full{color:#ff6969}
+.players.open{color:#71ff9b}
 
-.map{
-  margin-top:8px;
-  color:#c7ccd6;
-  word-break:break-all;
+.host{
+  margin-top:14px;font-size:21px;font-weight:800;color:#fff
 }
-
-.info{
-  margin-top:10px;
-  color:#8b93a1;
-  font-size:14px;
+.meta{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:14px
 }
-
 .badge{
-  display:inline-block;
-  padding:3px 8px;
-  border-radius:999px;
-  background:#232a3a;
-  color:#9db7ff;
-  font-size:12px;
-  margin-right:6px;
+  padding:7px 10px;border-radius:999px;
+  background:#111827;border:1px solid #2f3a52;
+  color:#aebbe0;font-size:13px
+}
+.map{
+  margin-top:10px;color:#68748d;font-size:13px;word-break:break-all
+}
+.empty,.error{
+  background:#151922;border:1px solid #2b3244;border-radius:18px;
+  padding:22px;color:#b7c0d4
 }
 
-@media(max-width:600px){
-  h1{font-size:28px;}
-  .room-top{align-items:flex-start;}
-  .room-name{font-size:16px;}
+@media(max-width:720px){
+  .header{display:block}
+  h1{font-size:34px}
+  .updated{text-align:left;margin-top:12px}
+  .stats{grid-template-columns:1fr}
+  .toolbar{display:block}
+  .toggle{width:100%;margin-top:10px}
+  .room-top{align-items:flex-start}
+  .version{font-size:23px}
+  .players{font-size:26px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="wrap">
-  <h1>CHAOS LIVE</h1>
-  <div class="sub">Warcraft III Reforged CHAOS Room List</div>
 
-  <div id="status" class="status">로딩중...</div>
-  <div id="rooms"></div>
+  <div class="header">
+    <div>
+      <h1><span class="pulse"></span>CHAOS LIVE</h1>
+      <div class="sub">Warcraft III Reforged · CHAOS_B1_A1 Live Room List</div>
+    </div>
+    <div id="updated" class="updated">불러오는 중...</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">현재 카오스 방</div>
+      <div id="totalRooms" class="stat-value">-</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">시작 직전</div>
+      <div id="nearRooms" class="stat-value">-</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">전체 접속 인원</div>
+      <div id="totalPlayers" class="stat-value">-</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input id="search" class="search" placeholder="방제 / 방장 / 맵 이름 검색">
+    <button id="sortBtn" class="toggle">인원 많은 순</button>
+  </div>
+
+  <div id="rooms" class="rooms"></div>
+
 </div>
 
 <script>
 const API = "https://api.wc3stats.com/gamelist";
+let allRooms = [];
+let sortMode = "players";
 
 function cleanMapName(map){
-  return map
-    .replace(".w3x", "")
-    .replace(".w3m", "");
+  return (map || "").replace(/\.w3x$/i,"").replace(/\.w3m$/i,"");
+}
+
+function getVersion(map){
+  const name = cleanMapName(map);
+  const upper = name.toUpperCase();
+
+  if(upper.includes("FX")){
+    const m = name.match(/fx\s*([0-9.]+)/i);
+    return m ? `FX ${m[1]}` : "FX";
+  }
+
+  if(upper.includes("DC")) return "DC";
+
+  const wcc = name.match(/WCC[_\s-]*([A-Za-z0-9.]+)/i);
+  if(wcc) return `WCC ${wcc[1]}`;
+
+  return "CHAOS";
+}
+
+function roomState(room){
+  const taken = Number(room.slotsTaken || 0);
+  const total = Number(room.slotsTotal || 0);
+
+  if(taken >= total) return "full";
+  if(total - taken <= 2) return "near";
+  return "open";
+}
+
+function render(){
+  const q = document.getElementById("search").value.toLowerCase();
+
+  let rooms = allRooms.filter(room => {
+    const text = `${room.name} ${room.host} ${room.map}`.toLowerCase();
+    return text.includes(q);
+  });
+
+  if(sortMode === "players"){
+    rooms.sort((a,b) => b.slotsTaken - a.slotsTaken);
+  }else{
+    rooms.sort((a,b) => b.created - a.created);
+  }
+
+  if(!rooms.length){
+    document.getElementById("rooms").innerHTML =
+      `<div class="empty">현재 표시할 CHAOS_B1_A1 방이 없습니다.</div>`;
+    return;
+  }
+
+  document.getElementById("rooms").innerHTML = rooms.map(room => {
+    const state = roomState(room);
+    return `
+      <div class="room ${state}">
+        <div class="room-top">
+          <div>
+            <div class="version">${getVersion(room.map)}</div>
+            <div class="room-name">${room.name || "제목 없음"}</div>
+          </div>
+          <div class="players ${state}">${room.slotsTaken}/${room.slotsTotal}</div>
+        </div>
+
+        <div class="host">👤 ${room.host || "-"}</div>
+
+        <div class="meta">
+          <span class="badge">서버 ${room.server || "-"}</span>
+          <span class="badge">유지 ${room.uptime ?? "-"}분</span>
+          <span class="badge">${state === "full" ? "가득 참" : state === "near" ? "시작 직전" : "모집중"}</span>
+        </div>
+
+        <div class="map">${cleanMapName(room.map)}</div>
+      </div>
+    `;
+  }).join("");
 }
 
 async function loadRooms(){
-  const status = document.getElementById("status");
-  const roomsEl = document.getElementById("rooms");
-
   try{
     const res = await fetch(API);
     const data = await res.json();
 
-    const rooms = data.body
+    allRooms = data.body
       .filter(room =>
         room.map &&
-        room.map.toLowerCase().includes("chaos")
-      )
-      .sort((a,b) => b.slotsTaken - a.slotsTaken);
+        room.map.toUpperCase().startsWith("CHAOS_B1_A1_")
+      );
 
-    const now = new Date();
-    const timeText = now.toLocaleTimeString("ko-KR", {
-      hour:"2-digit",
-      minute:"2-digit",
-      second:"2-digit"
-    });
+    const near = allRooms.filter(room => {
+      const total = Number(room.slotsTotal || 0);
+      const taken = Number(room.slotsTaken || 0);
+      return total > taken && total - taken <= 2;
+    }).length;
 
-    status.innerHTML =
-      `현재 CHAOS 방 <strong>${rooms.length}</strong>개 · 마지막 갱신 ${timeText} · 30초 자동 갱신`;
+    const totalPlayers = allRooms.reduce((sum,room) =>
+      sum + Number(room.slotsTaken || 0), 0
+    );
 
-    if(rooms.length === 0){
-      roomsEl.innerHTML = `<div class="room">현재 열린 CHAOS 방이 없습니다.</div>`;
-      return;
-    }
+    document.getElementById("totalRooms").textContent = allRooms.length;
+    document.getElementById("nearRooms").textContent = near;
+    document.getElementById("totalPlayers").textContent = totalPlayers;
 
-    roomsEl.innerHTML = rooms.map(room => `
-      <div class="room">
-        <div class="room-top">
-          <div class="room-name">${room.name || "제목 없음"}</div>
-          <div class="players">${room.slotsTaken}/${room.slotsTotal}</div>
-        </div>
+    document.getElementById("updated").textContent =
+      new Date().toLocaleTimeString("ko-KR") + " 갱신 · 30초 자동";
 
-        <div class="map">
-          ${cleanMapName(room.map)}
-        </div>
-
-        <div class="info">
-          <span class="badge">${room.server || "-"}</span>
-          Host : ${room.host || "-"} · Uptime : ${room.uptime ?? "-"}분
-        </div>
-      </div>
-    `).join("");
+    render();
 
   }catch(err){
-    status.innerHTML = "불러오기 실패";
-    roomsEl.innerHTML = `<div class="room">${err}</div>`;
+    document.getElementById("rooms").innerHTML =
+      `<div class="error">데이터를 불러오지 못했습니다.<br>${err}</div>`;
   }
 }
+
+document.getElementById("search").addEventListener("input", render);
+
+document.getElementById("sortBtn").addEventListener("click", () => {
+  sortMode = sortMode === "players" ? "new" : "players";
+  document.getElementById("sortBtn").textContent =
+    sortMode === "players" ? "인원 많은 순" : "최근 생성 순";
+  render();
+});
 
 loadRooms();
 setInterval(loadRooms, 30000);
